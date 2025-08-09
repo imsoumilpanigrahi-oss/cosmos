@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SYSTEM — Solo Mode</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#03050a">
+</head>
+<body>
+  <canvas id="bg" class="bg"></canvas>
+
+  <div class="shell">
+    <header class="sys-top">
+      <div class="logo">SYSTEM</div>
+      <div class="title">Status Window — <span class="accent">Sung Jin-Woo Mode</span></div>
+      <div class="actions">
+        <button id="installBtn" class="icon">⬇</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel left">
+        <div class="panel-head"><h2>Daily Quests</h2>
+          <div class="sub">Complete the assigned quests each day. Fail and feel the System's wrath.</div>
+        </div>
+
+        <div id="quests" class="quests"></div>
+
+        <div class="controls">
+          <button id="undo" class="btn ghost">Undo</button>
+          <button id="export" class="btn ghost">Export</button>
+          <button id="import" class="btn ghost">Import</button>
+          <button id="remind" class="btn main">Enable Reminders</button>
+        </div>
+      </section>
+
+      <aside class="panel right">
+        <div class="status">
+          <h3>Status</h3>
+          <div class="status-row"><div>Level</div><div id="lvl">1</div></div>
+          <div class="status-row"><div>XP</div><div id="xp">0 / 100</div></div>
+          <div class="status-row"><div>Rank</div><div id="rank">E</div></div>
+          <div class="stats">
+            <div class="stat"><div class="label">STR</div><div id="stat-str">10</div></div>
+            <div class="stat"><div class="label">AGI</div><div id="stat-agi">10</div></div>
+            <div class="stat"><div class="label">STA</div><div id="stat-sta">10</div></div>
+            <div class="stat"><div class="label">LUC</div><div id="stat-luc">5</div></div>
+          </div>
+        </div>
+
+        <div class="perks mt">
+          <h3>Perks & Abilities</h3>
+          <div id="perksList" class="muted">No perks yet.</div>
+        </div>
+
+        <div class="badges mt">
+          <h3>Penalties</h3>
+          <div id="penaltyLog" class="muted">No penalties.</div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="panel footer-panel">
+      <h3>System Console</h3>
+      <div id="console" class="console muted">System initialized.</div>
+    </section>
+  </div>
+
+<script src="app.js"></script>
+<script>
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').style.display='inline-block'; });
+  document.getElementById('installBtn').addEventListener('click', async ()=>{
+    if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }
+    else alert('Use browser menu → Add to Home Screen');
+  });
+</script>
+</body>
+</html>
