@@ -1,0 +1,9 @@
+{
+  "name": "SYSTEM — Solo Mode",
+  "short_name": "SYSTEM",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#03050a",
+  "theme_color": "#03050a",
+  "icons":[]
+}
